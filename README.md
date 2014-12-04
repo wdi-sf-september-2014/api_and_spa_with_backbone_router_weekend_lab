@@ -22,16 +22,19 @@ It's time to practice your skills.
 * `first`
 * `last`
 * `email`
+* `password`
 
-* After signing up, the user should receive an auth token, which should be stored in the user's cookies under the key `auth_token`.
+* After signing up, the user should be assigned an auth token, which should be returned by the `POST /users` endpoint and stored in the user's session storage under the key `auth_token`. See [info about session storage](https://code.google.com/p/sessionstorage/#The_Web_Storage_API)
 
-* If a user attempts to sign up with an email that already exists in the system, their token should be regenerated, and the new token should be set in the user's cookies under the key `auth_token`.
+* If a user attempts to sign up with an email that already exists in the system, their token should be regenerated, and the new token should be set in the user's `sessionStorage` under the key `auth_token`.
+
+* The `auth_token` is to be used on all subsequent requests to the API, and passed via the `Authorization` header. [See this stackoverflow post](http://stackoverflow.com/a/20633326/593109). You'll obviously have to change the header name, as per the lesson earlier this week.
 
 * After a successful signup, they should be taken to `/#posts`.
 
 ### User login (`/#login`)
 
-* To sign in, the user's `auth_token` should be retrieved from their cookie. If the user had cleared their cookies, they should be sent to the `/#signup` route.
+* To sign in, the user needs to provide his email and password. Upon successfully signing in, a new `auth_token` should be generated, returned, and stored in the `sessionStorage` 
 
 ### User should be able to write a blog post (`/#posts/new`)
 
