@@ -4,6 +4,16 @@ You now know the basics of how to build RESTful JSON APIs with Rails, building a
 
 It's time to practice your skills.
 
+* Use: 
+	* Rails to build an API
+	* Backbone.js for your frontend router
+	* jQuery and Handlebars
+
+* Start on this project in pairs on Friday
+	* On Friday, plan out how you'll accomplish this
+	* Figure out how to do the auth flow with your partner
+* Complete the projects individually over the weekend
+
 ## Build a simplified medium clone backed by a RESTful JSON API
 
 ### User signup (`/#signup`)
