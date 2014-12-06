@@ -28,7 +28,7 @@ $(document).ready(function() {
         $("#container").html(html);
       },
       error: function(jqXHR, textStatus, errorThrown) { 
-        alert("something went wrong");
+        alert("something went wrong getting posts feed");
         console.log(errorThrown);
       }
     });
@@ -64,7 +64,7 @@ $(document).ready(function() {
         $("#container").html(html);
     },
     error: function(jqXHR, textStatus, errorThrown) { 
-            alert("something went wrong");
+            alert("something went wrong viewing a post");
             console.log(errorThrown);
         }
     });
@@ -85,7 +85,7 @@ $(document).ready(function() {
         $("#container").html(html);
     },
     error: function(jqXHR, textStatus, errorThrown) { 
-            alert("something went wrong");
+            alert("something went wrong editing a post");
             console.log(errorThrown);
         }
     });
@@ -157,8 +157,8 @@ $(document).ready(function() {
     });
   $(document).on("click", "#login", function(){
       $.ajax({
-        url: "http://api.MediumApiClone.dev/users",
-        type: "GET",
+        url: "http://api.MediumApiClone.dev/login",
+        type: "POST",
         data: {
           user: {
             email: $("#check-email").val(),
@@ -171,7 +171,7 @@ $(document).ready(function() {
           getposts();
         },
         error: function() {
-          alert("Something went wrong adding a user");
+          alert("Something went wrong signing in");
         }
       });
     });
