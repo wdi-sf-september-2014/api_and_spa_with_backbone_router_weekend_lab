@@ -1,0 +1,18 @@
+rails g scaffold user firstname:string lastname:string email:string password:string auth_token:string
+
+rails g scaffold post title:string content:text is_public:boolean
+
+
+
+
+firstname:
+lastname:
+email:
+password:
+auth_token:
+
+
+
+title:
+content:
+is_public:
