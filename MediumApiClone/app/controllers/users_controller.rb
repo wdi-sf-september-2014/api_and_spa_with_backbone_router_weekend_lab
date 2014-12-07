@@ -1,24 +1,17 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :update]
 
-  # def regenerate_auth_token
-  #   loop do
-  #     token = SecureRandom.hex
-  #     break token unless self.class.exists?(auth_token: token)
-  #   end
-  # end
-
-  # def attempt_login
-  #   if params[:email].present? && params[:password].present?
-  #     found_user = User.where(email: params[:email]).first
-  #     if found_user
-  #       unless sessionStorage.getItem(:auth_token)
-  #         found_user.auth_token = regenerate_auth_token
-  #         sessionStorage.setItem(auth_token: found_user.auth_token)
-  #       end
-  #     end
-  #   end
-  # end
+  def attempt_login
+    @found_user = User.where(email: params[:email], password: params[:password]).first
+    respond_to do |format|
+      if @found_user
+        @found_user.set_auth_token
+        format.json { render json: @found_user }
+      else
+        format.json { head :no_content, status: 404 }
+      end
+    end
+  end
   # GET /users
   # GET /users.json
   def index

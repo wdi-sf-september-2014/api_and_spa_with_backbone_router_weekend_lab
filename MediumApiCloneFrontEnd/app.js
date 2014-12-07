@@ -3,10 +3,10 @@ $(document).ready(function() {
   var Router = Backbone.Router.extend({
     routes: {
       "signup":"signup",
-      "login":"login",
-      "posts/new":"add_post",
-      "posts/:id":"view_post",
-      "posts/:id/edit":"edit_post",
+      "users/login":"login",
+      "users/:user_id/posts":"add_post",
+      "users/:user_id/posts/:id":"view_post",
+      "users/:user_id/posts/:id":"edit_post",
       "posts":"index"
     }
   });
@@ -51,9 +51,9 @@ $(document).ready(function() {
 
   router.on("route:view_post", function(id) {
     $.ajax({
-    url: "http://api.MediumApiClone.dev/posts/" + id,
+    url: "http://api.MediumApiClone.dev/users/" + sessionStorage.getItem("user_post_id") +  "/posts/" + id,
     type: "GET",
-    headers: { 'Authorization' :'Token token= ' + sessionStorage.getItem("auth_token") },
+    headers: { 'Authorization' :'Token token=' + sessionStorage.getItem("auth_token")},
     success: function(data) { 
         var source = $("#viewpost").html();
 
@@ -72,9 +72,9 @@ $(document).ready(function() {
 
   router.on("route:edit_post", function(id) {
     $.ajax({
-    url: "http://api.MediumApiClone.dev/posts/" + id,
+    url: "http://api.MediumApiClone.dev/users/" + sessionStorage.getItem("user_post_id") + "/posts/" + id,
     type: "GET",
-    headers: { 'Authorization' :'Token token= ' + sessionStorage.getItem("auth_token") },
+    headers: { 'Authorization' :'Token token=' + sessionStorage.getItem("auth_token")},
     success: function(data) { 
         var source = $("#edit_post").html();
 
@@ -91,20 +91,62 @@ $(document).ready(function() {
     });
   });
 
+  router.on("route:add_post", function () {
+    $.ajax({
+    url: "http://api.MediumApiClone.dev/users/"+ sessionStorage.getItem("user_id") + "/posts",
+    type: "GET",
+    headers: { 'Authorization' :'Token token=' + sessionStorage.getItem("auth_token")},
+    success: function(data) { 
+        var source = $("#new_post").html();
+
+        $("#container").html(source);
+    },
+    error: function(jqXHR, textStatus, errorThrown) { 
+            alert("something went wrong editing a post");
+            console.log(errorThrown);
+        }
+    });
+  })
+
   Backbone.history.start();
 
-  $(document).on("click", "#new_post", function(){
+  $(document).on("click", ".submitnew", function(){
     $.ajax({
-      url: "http://api.MediumApiClone.dev/posts",
+      url: "http://api.MediumApiClone.dev/users/"+ sessionStorage.getItem("user_id") +"/posts",
       type: "POST",
-      headers: { 'Authorization' :'Token token= ' + sessionStorage.getItem("auth_token") },
+      headers: { 'Authorization' :'Token token=' + sessionStorage.getItem("auth_token")},
       data: {
-        posts: {
+        post: {
           title: $("#title").val(),
-          content:  $("#content").val()
+          content:  $("#content").val(),
+          user_id: sessionStorage.getItem("user_id")
         }
       },
-      success: function(){
+      success: function(data){
+        sessionStorage.setItem("user_post_id", data.user_id);
+        getposts();
+      },
+      error: function() {
+        alert("Something went wrong adding a post");
+      }
+    });
+  });
+
+  $(document).on("click", ".draft", function(){
+    $.ajax({
+      url: "http://api.MediumApiClone.dev/users/" + sessionStorage.getItem("user_id") + "/posts",
+      type: "POST",
+      headers: { 'Authorization' :'Token token=' + sessionStorage.getItem("auth_token")},
+      data: {
+        post: {
+          title: $("#title").val(),
+          content:  $("#content").val(),
+          public: false,
+          user_id: sessionStorage.getItem("user_id")
+        }
+      },
+      success: function(data){
+        sessionStorage.setItem("user_post_id", data.user_id);
         getposts();
       },
       error: function() {
@@ -115,17 +157,17 @@ $(document).ready(function() {
 
   $(document).on("click", ".submitedit", function (event) {
         $.ajax({
-        url: "http://api.MediumApiClone.dev/posts/" + event.target.id,
+        url: "http://api.MediumApiClone.dev/users/" + sessionStorage.getItem("user_post_id") + "/posts/" + event.target.id,
         type: "PUT",
-        headers: { 'Authorization' :'Token token= ' + sessionStorage.getItem("auth_token") },
+        headers: { 'Authorization' :'Token token=' + sessionStorage.getItem("auth_token")},
         data: {
-          posts: {
+          post: {
             title: $("#title").val(),
             content:  $("#content").val()
         }
       },
         success: function(data) { 
-            window.location.href=""
+            getposts();
         },
         error: function(jqXHR, textStatus, errorThrown) { 
                 alert("something went wrong updating a post");
@@ -148,6 +190,7 @@ $(document).ready(function() {
         success: function(data){
           $("#create-account-modal").modal("hide");
           sessionStorage.setItem("auth_token", data.auth_token);
+          sessionStorage.setItem("user_id", data.id);
           getposts();
         },
         error: function() {
@@ -157,7 +200,7 @@ $(document).ready(function() {
     });
   $(document).on("click", "#login", function(){
       $.ajax({
-        url: "http://api.MediumApiClone.dev/login",
+        url: "http://api.MediumApiClone.dev/users/login",
         type: "POST",
         data: {
           user: {
@@ -165,9 +208,10 @@ $(document).ready(function() {
             password: $("#check-password").val()
           }
         },
-        success: function(data){
+        success: function(found_user){
           $("#login-modal").modal("hide");
-          sessionStorage.setItem("auth_token", data.auth_token);
+          sessionStorage.setItem("auth_token", found_user.auth_token);
+          sessionStorage.setItem("user_id", found_user.id);
           getposts();
         },
         error: function() {
