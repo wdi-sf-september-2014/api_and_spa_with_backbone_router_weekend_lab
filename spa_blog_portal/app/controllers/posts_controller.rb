@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
-
+  before_action :authenticate, only: [:show, :edit, :update, :destroy]
   # GET /posts
   # GET /posts.json
   def index
@@ -70,5 +70,21 @@ class PostsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
       params.require(:post).permit(:title, :body)
+    end
+
+    protected
+    def authenticate
+      authenticate_token || render_unauthorized
+    end
+    def authenticate_token
+      authenticate_or_request_with_http_token('posts') do |token, options|
+        User.find_by(auth_token: token)
+      end
+    end
+    def render_unauthorized
+      self.headers['WWW-Authenticate'] = 'Token realm="purchases"'
+      respond_to do |format|
+        format.json { render json: 'Bad credentials', status: 401 }
+      end
     end
 end
