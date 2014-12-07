@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate, only: [:new, :edit, :update, :destroy]
   # GET /posts
   # GET /posts.json
   def index
@@ -82,7 +82,7 @@ class PostsController < ApplicationController
       end
     end
     def render_unauthorized
-      self.headers['WWW-Authenticate'] = 'Token realm="purchases"'
+      self.headers['WWW-Authenticate'] = 'Token realm="posts"'
       respond_to do |format|
         format.json { render json: 'Bad credentials', status: 401 }
       end
