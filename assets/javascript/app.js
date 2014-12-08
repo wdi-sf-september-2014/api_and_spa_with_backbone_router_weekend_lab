@@ -23,13 +23,14 @@ var Router = Backbone.Router.extend({
 
 var router = new Router;
 
-var getPosts = function(){
+function getPosts(){
 	$.ajax({
 		url: "http://localhost:3000/posts.json",
 		type: "GET",
 		success: function(data){
 			var html = postShowTemplate({postData: data});
 			$("#content").html(html);
+			alert("it worked");
 		},
 		error: function(){
 			alert("Something's not right");
