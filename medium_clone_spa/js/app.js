@@ -3,19 +3,33 @@ $(function() {
   var Router = Backbone.Router.extend({
 
     routes: {
-      "":                     "index", // root
-      "index":                "index"  // index
+      "":         "index",
+      "index":    "index",
+      "signup":   "signup",
+      "login":    "login"
     },
 
     index: function() {
-      var source   = $("#posts_template").html();
+      var source   = $("#posts_t").html();
       var template = Handlebars.compile(source);
 
       $.ajax( "http://api.medium-clone-api.dev/posts.json", {
         complete: function( data ) {
-          $('#posts').html(template({posts: data.responseJSON}));
+          $('#container').html(template({posts: data.responseJSON}));
         }
       });
+    },
+
+    signup: function() {
+      var source   = $("#signup_t").html();
+      var template = Handlebars.compile(source);
+      $('#container').html(template());
+    },
+
+    login: function() {
+      var source   = $("#login_t").html();
+      var template = Handlebars.compile(source);
+      $('#container').html(template());
     }
 
   });

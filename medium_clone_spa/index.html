@@ -1,4 +1,4 @@
-<script type="text/x-handlebars-template" name="posts" id="posts_template">
+<script type="text/x-handlebars-template" name="posts" id="posts_t">
   {{#each posts}}
   <article>
     <h1>{{title}}</h1>
@@ -8,6 +8,7 @@
   {{/each}}
 </script>
 
+<script type="text/h-handlebars-template" name="signup" id="signup_t">
 Signup
 
 <form id="signup">
@@ -17,7 +18,9 @@ Signup
   Password: <input type="text" name="password"></input>
   <input type="submit" value="Sign up!">
 </form>
+</script>
 
+<script type="text/h-handlebars-template" name="signup" id="login_t">
 Login
 
 <form id="login">
@@ -25,8 +28,9 @@ Login
   Password: <input type="text" name="password"></input>
   <input type="submit" value="Login!">
 </form>
+</script>
 
-<div id="posts">
+<div id="container">
 </div>
 
 <script src="js/jquery-2.1.1.min.js"></script>
