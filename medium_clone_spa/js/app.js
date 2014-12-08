@@ -59,7 +59,9 @@ $(function() {
             password: $('#login input[name=password]').val()
           },
           complete: function ( data ) {
-            console.log(data);  
+            console.log(data);
+            sessionStorage.setItem("auth_token", data.responseJSON.auth_token);
+            sessionStorage.setItem("user_id", data.responseJSON.id);
           }
         });
       });
