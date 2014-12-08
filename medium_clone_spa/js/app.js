@@ -14,6 +14,7 @@ $(function() {
       "index":          "index",
       "signup":         "signup",
       "login":          "login",
+      "logout":         "logout",
       "posts/new":      "new_post",
       "posts/:id/show": "show_post"
     },
@@ -21,8 +22,10 @@ $(function() {
     index: function() {
       if (!sessionStorage.getItem("auth_token")) {
         $('.not-signed-in').show();
+        $('.signed-in').hide();
       } else {
         $('.not-signed-in').hide();
+        $('.signed-in').show();
       }
       $.ajax(root_uri + "/posts.json", {
         complete: function( data ) {
@@ -75,6 +78,12 @@ $(function() {
       });
     },
 
+    logout: function() {
+      sessionStorage.removeItem("auth_token"); 
+      sessionStorage.removeItem("user_id"); 
+      $('.signed-in').hide();
+    },
+
     new_post: function() {
       if (sessionStorage.getItem("auth_token")) {
         $('#container').html(compile_template("#new_post_t")());
@@ -84,8 +93,11 @@ $(function() {
     },
 
     show_post: function() {
-      $('#container').html(compile_template("#show_post_t")());
-
+      if (sessionStorage.getItem("auth_token")) {
+        $('#container').html(compile_template("#show_post_t")());
+      } else {
+        app.navigate('login');
+      }
     }
 
   });
