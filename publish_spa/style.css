@@ -1,0 +1,16 @@
+.row {
+	margin-top: 10px;
+}
+
+input[name="title"]{
+	font-size: 20px;
+	font-weight: bold;
+}
+
+#add-post {
+	display:none;
+}
+
+h1{
+	text-decoration: none;
+}
