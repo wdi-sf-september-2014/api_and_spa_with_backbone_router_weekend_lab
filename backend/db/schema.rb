@@ -15,6 +15,8 @@ ActiveRecord::Schema.define(version: 20141205234421) do
 
   create_table "comments", force: true do |t|
     t.text     "body"
+    t.integer  "user_id"
+    t.integer  "post_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -23,6 +25,7 @@ ActiveRecord::Schema.define(version: 20141205234421) do
     t.string   "headline"
     t.text     "body"
     t.boolean  "public"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
