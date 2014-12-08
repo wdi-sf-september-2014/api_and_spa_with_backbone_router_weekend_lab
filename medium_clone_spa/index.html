@@ -1,4 +1,26 @@
+<script type="text/h-handlebars-template" name="new_post" id="new_post_t">
+  <h1>New Post</h1>
+
+  <form id="post">
+    Title: <input type="text" name="title">
+    Content: <input type="text" name="content">
+  </form>
+</script>
+
+<script type="text/h-handlebars-template" name="show_post" id="show_post_t">
+  <h1>Show Post</h1>
+</script>
+
+
 <script type="text/x-handlebars-template" name="posts" id="posts_t">
+  <h1>Posts</h1>
+
+  {{#unless posts}}
+  No posts!
+  {{/unless}}
+
+  <div><a href="#posts/new">Add post</a></div>
+
   {{#each posts}}
   <article>
     <h1>{{title}}</h1>

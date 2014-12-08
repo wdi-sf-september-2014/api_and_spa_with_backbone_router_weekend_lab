@@ -5,15 +5,17 @@ $(function() {
     return Handlebars.compile(source);
   };
 
-  var root_uri =  "http://api.medium-clone-api.dev"
+  var root_uri =  "http://api.medium-clone-api.dev";
 
   var Router = Backbone.Router.extend({
 
     routes: {
-      "":         "index",
-      "index":    "index",
-      "signup":   "signup",
-      "login":    "login"
+      "":               "index",
+      "index":          "index",
+      "signup":         "signup",
+      "login":          "login",
+      "posts/new":      "new_post",
+      "posts/:id/show": "show_post"
     },
 
     index: function() {
@@ -42,6 +44,7 @@ $(function() {
           complete: function ( data ) {
             sessionStorage.setItem("auth_token", data.responseJSON.auth_token);
             sessionStorage.setItem("user_id", data.responseJSON.id);
+            app.navigate('index', {trigger: true});
           }
         });
       });
@@ -59,17 +62,30 @@ $(function() {
             password: $('#login input[name=password]').val()
           },
           complete: function ( data ) {
-            console.log(data);
             sessionStorage.setItem("auth_token", data.responseJSON.auth_token);
             sessionStorage.setItem("user_id", data.responseJSON.id);
+            app.navigate('index', {trigger: true});
           }
         });
       });
+    },
+
+    new_post: function() {
+      if (sessionStorage.getItem("auth_token")) {
+        $('#container').html(compile_template("#new_post_t")());
+      } else {
+        app.navigate('login');
+      }
+    },
+
+    show_post: function() {
+      $('#container').html(compile_template("#show_post_t")());
+
     }
 
   });
 
-  new Router();
+  var app = new Router();
   Backbone.history.start();
 
 });
