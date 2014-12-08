@@ -19,6 +19,11 @@ $(function() {
     },
 
     index: function() {
+      if (!sessionStorage.getItem("auth_token")) {
+        $('.not-signed-in').show();
+      } else {
+        $('.not-signed-in').hide();
+      }
       $.ajax(root_uri + "/posts.json", {
         complete: function( data ) {
           $('#container').html(compile_template("#posts_t")({posts: data.responseJSON}));
