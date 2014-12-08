@@ -1,5 +1,10 @@
 $(function() {
 
+  var compile_template = function(id) {
+    var source   = $(id).html();
+    return Handlebars.compile(source);
+  };
+
   var Router = Backbone.Router.extend({
 
     routes: {
@@ -10,26 +15,19 @@ $(function() {
     },
 
     index: function() {
-      var source   = $("#posts_t").html();
-      var template = Handlebars.compile(source);
-
       $.ajax( "http://api.medium-clone-api.dev/posts.json", {
         complete: function( data ) {
-          $('#container').html(template({posts: data.responseJSON}));
+          $('#container').html(compile_template("#posts_t")({posts: data.responseJSON}));
         }
       });
     },
 
     signup: function() {
-      var source   = $("#signup_t").html();
-      var template = Handlebars.compile(source);
-      $('#container').html(template());
+      $('#container').html(compile_template("#signup_t")());
     },
 
     login: function() {
-      var source   = $("#login_t").html();
-      var template = Handlebars.compile(source);
-      $('#container').html(template());
+      $('#container').html(compile_template("#login_t")());
     }
 
   });
