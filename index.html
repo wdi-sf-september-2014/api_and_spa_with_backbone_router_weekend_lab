@@ -47,11 +47,58 @@
 				<div class="container margin-top-40">
 						{{#each postData}}
 						<h1>{{headline}}</h1>
+						<h4>By {{first}} {{last}}</h4>
 						<p>{{body}}</p>
 						{{/each}}
 				</div>
 			</script>
 			<!-- End of section to display all posts -->
+
+			<!-- This section creates a modal for adding posts -->
+			<div id="add-post-modal" class="modal fade">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+							<h4 class="modal-title">Add a new post</h4>
+						</div>
+						<div class="modal-body">
+							<div class="bold">
+								Headline
+							</div>
+							<div class="margin-top-10">
+								<input type="text" class="form-control" id="add-headline" />
+							</div>
+							<div class="bold">
+								Body
+							</div>
+							<div class="margin-top-10">
+								<textarea class="form-control" rows="10" id="add-body"></textarea>
+							</div>
+							<div class="margin-top-10">
+								<div class="radio">
+									<label>
+										<input type="radio" id="draft-status" value="false">
+										Set status to "draft"
+									</label>
+								</div>
+								<div class="radio">
+									<label>
+										<input type="radio" class="draft-status" value="true">
+										Set status to "publish"
+									</label>
+								</div>								
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-primary" id="add-post">Add New Post</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- End of section to add a post -->
 		
 		</div> <!-- end 'Container' -->
 			
