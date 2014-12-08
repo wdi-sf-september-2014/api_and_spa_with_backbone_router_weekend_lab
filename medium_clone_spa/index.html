@@ -1,0 +1,18 @@
+<script type="text/x-handlebars-template" name="posts" id="posts_template">
+  {{#each posts}}
+  <article>
+    <h1>{{title}}</h1>
+    <time datetime="{{createdAt}}"></time>
+    <p>{{content}}</p>
+  </article>
+  {{/each}}
+</script>
+
+<div id="posts">
+</div>
+
+<script src="js/jquery-2.1.1.min.js"></script>
+<script src="js/underscore-min.js"></script>
+<script src="js/backbone-min.js"></script>
+<script src="js/handlebars-v2.0.0.js"></script>
+<script src="js/app.js"></script>
