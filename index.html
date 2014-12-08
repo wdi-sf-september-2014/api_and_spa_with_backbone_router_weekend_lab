@@ -37,20 +37,20 @@
 				</div><!-- /.container-fluid -->
 			</nav>
 			<!-- Navbar -->
-
+		
 			<!-- Needed for Handlebars -->
 			<div id="content"></div>
 			<!-- Needed for Handlebars -->
-
+		
 			<!-- This section diplays all the post -->
 			<script type="x-handlebars-template" id="show-posts-template">
 				<div class="container margin-top-40">
-					{{#each postData}}
-					<h1>{{headline}}</h1>
-					<h3>By {{first}} {{last}}</h3>
-					<p>{{body}}</p>
-					{{/each}}
-				</div> <!-- end 'container margin-top-40' -->
+						{{#each postData}}
+						<h1>{{headline}}</h1>
+						<h3>By {{first}} {{last}}</h3>
+						<p>{{body}}</p>
+						{{/each}}
+				</div>
 			</script>
 			<!-- End of section to display all posts -->
 		
@@ -59,6 +59,7 @@
 		<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 		<script src="assets/javascript/handlebars.js"></script>
 		<script src="assets/javascript/underscore.js"></script>
+		<script src="assets/javascript/backbone.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 		<script src="assets/javascript/app.js"></script>
 	</body>
