@@ -8,33 +8,54 @@
 	</head>
 
 	<body>
-		<nav class="navbar navbar-default" role="navigation">
-			<div class="container-fluid">
-				<!-- Brand and toggle get grouped for better mobile display -->
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-						<span class="sr-only">Toggle navigation</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand" href="#">Medium Clone</a>
-				</div>
+		<div class="container">
+			<!-- Navbar -->
+			<nav class="navbar navbar-default" role="navigation">
+				<div class="container-fluid">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href="#">Medium Clone</a>
+					</div>
 
-				<!-- Collect the nav links, forms, and other content for toggling -->
-				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav">
-						<li><a href="#">Write a New Post</a></li>
-					</ul>
-					<ul class="nav navbar-nav navbar-right">
-        		<li><a href="#">Log In</a></li>
-        		<li><a href="#">Register</a></li>
-      		</ul>
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						<ul class="nav navbar-nav">
+							<li><a data-toggle="modal" data-target="#add-post-modal">Write a New Post</a></li>
+						</ul>
+						<ul class="nav navbar-nav navbar-right">
+	        		<li><a href="#">Log In</a></li>
+	        		<li><a href="#">Register</a></li>
+	      		</ul>
 
-				</div><!-- /.navbar-collapse -->
-			</div><!-- /.container-fluid -->
-		</nav>
+					</div><!-- /.navbar-collapse -->
+				</div><!-- /.container-fluid -->
+			</nav>
+			<!-- Navbar -->
+
+			<!-- Needed for Handlebars -->
+			<div id="content"></div>
+			<!-- Needed for Handlebars -->
+
+			<!-- This section diplays all the post -->
+			<script type="x-handlebars-template" id="show-posts-template">
+				<div class="container margin-top-40">
+					{{#each postData}}
+					<h1>{{headline}}</h1>
+					<h3>By {{first}} {{last}}</h3>
+					<p>{{body}}</p>
+					{{/each}}
+				</div> <!-- end 'container margin-top-40' -->
+			</script>
+			<!-- End of section to display all posts -->
 		
+		</div> <!-- end 'Container' -->
+			
 		<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 		<script src="assets/javascript/handlebars.js"></script>
 		<script src="assets/javascript/underscore.js"></script>
