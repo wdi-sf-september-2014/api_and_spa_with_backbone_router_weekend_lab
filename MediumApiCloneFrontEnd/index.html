@@ -33,9 +33,27 @@
 	<div>
 	<a href="#login" data-toggle="modal" data-target="#login-modal" class="btn btn-success create">Login</a> 
 	<a href="#signup" data-toggle="modal" data-target="#create-account-modal" class="btn btn-success create">Signup</a> 
-	<a href="#users/:id/posts" class="btn btn-default pull-right">Post</a> 
+	<a href="#posts/new" class="btn btn-default pull-right">Post</a> 
+	<a href="#users/posts" class="btn btn-default pull-right">My Posts</a> 
 		<div class="row">
 			{{#each postData}}
+				<div class="col-sm-6">
+					<h2>{{title}}</h2>
+				  <p>{{content}}</p>
+				  {{if (postData.user_id == sessionStorage.getItem("user_id")) && (postData.public == false)}}
+				  	<a class="btn btn-default publish">Publish</a>
+				  {{/if}}
+				</div>
+			{{/each}}
+		</div>
+	</script>
+
+	<script id="user_posts" type="text/x-handlebars-template">
+	<div><h1>All Posts</h1></div>
+	<a href="#posts/new" class="btn btn-default pull-right">Post</a> 
+	<a href="#posts" class="btn btn-success">Back to All Posts</a>
+		<div class="row">
+			{{#each userpostData}}
 				<div class="col-sm-6">
 					<h2>{{title}}</h2>
 				  <p>{{content}}</p>
@@ -56,13 +74,13 @@
 					Email
 				</div>
 				<div class="margin-top-10">
-					<input type="text" class="form-control" id="check-email" />
+					<input type="text" name="email" class="form-control" id="check-email" />
 				</div>
 				<div class="bold margin-top-10">
 					Password
 				</div>
 				<div class="margin-top-10">
-					<input type="password" class="form-control"  id="check-password"/>
+					<input type="password" name="password" class="form-control"  id="check-password"/>
 				</div>
 			</div>
 			<div class="modal-footer">

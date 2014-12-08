@@ -3,8 +3,9 @@ $(document).ready(function() {
   var Router = Backbone.Router.extend({
     routes: {
       "signup":"signup",
-      "users/login":"login",
-      "users/:user_id/posts":"add_post",
+      "login":"login",
+      "posts/new":"add_post",
+      "users/posts":"user_posts",
       "users/:user_id/posts/:id":"view_post",
       "users/:user_id/posts/:id":"edit_post",
       "posts":"index"
@@ -47,6 +48,27 @@ $(document).ready(function() {
 
   router.on("route:login", function () {
     $("#login-modal").modal("show");
+  });
+
+
+  router.on("route:user_posts", function() {
+    $.ajax({
+      url: "http://api.MediumApiClone.dev/users/"+ sessionStorage.getItem("user_id") + "/posts.json",
+      type: "GET",
+      success: function(data) { 
+        var source = $("#user_posts").html();
+
+        var template = Handlebars.compile(source);
+
+        var html = template({userpostData: data});
+
+        $("#container").html(html);
+      },
+      error: function(jqXHR, textStatus, errorThrown) { 
+        alert("something went wrong getting user's posts feed");
+        console.log(errorThrown);
+      }
+    });
   });
 
   router.on("route:view_post", function(id) {
@@ -118,8 +140,7 @@ $(document).ready(function() {
       data: {
         post: {
           title: $("#title").val(),
-          content:  $("#content").val(),
-          user_id: sessionStorage.getItem("user_id")
+          content:  $("#content").val() 
         }
       },
       success: function(data){
@@ -141,8 +162,7 @@ $(document).ready(function() {
         post: {
           title: $("#title").val(),
           content:  $("#content").val(),
-          public: false,
-          user_id: sessionStorage.getItem("user_id")
+          public: false
         }
       },
       success: function(data){
@@ -200,7 +220,7 @@ $(document).ready(function() {
     });
   $(document).on("click", "#login", function(){
       $.ajax({
-        url: "http://api.MediumApiClone.dev/users/login",
+        url: "http://api.MediumApiClone.dev/users/login.json",
         type: "POST",
         data: {
           user: {
@@ -208,10 +228,10 @@ $(document).ready(function() {
             password: $("#check-password").val()
           }
         },
-        success: function(found_user){
+        success: function(user){
           $("#login-modal").modal("hide");
-          sessionStorage.setItem("auth_token", found_user.auth_token);
-          sessionStorage.setItem("user_id", found_user.id);
+          sessionStorage.setItem("auth_token", user.auth_token);
+          sessionStorage.setItem("user_id", user.id);
           getposts();
         },
         error: function() {

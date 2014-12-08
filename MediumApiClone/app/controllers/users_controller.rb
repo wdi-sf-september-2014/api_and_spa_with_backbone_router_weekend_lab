@@ -1,12 +1,13 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :update]
+  before_action :set_user, only: [:show, :update, :post_index]
 
   def attempt_login
-    @found_user = User.where(email: params[:email], password: params[:password]).first
+    @user = User.where(email: params[:user][:email], password: params[:user][:password]).first
     respond_to do |format|
-      if @found_user
-        @found_user.set_auth_token
-        format.json { render json: @found_user }
+      if @user
+        @user.set_auth_token
+        @user.save
+        format.json { render json: @user }
       else
         format.json { head :no_content, status: 404 }
       end
@@ -52,7 +53,7 @@ class UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      @user = User.find(params[:id])
+      @user = User.find(params[:user_id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
