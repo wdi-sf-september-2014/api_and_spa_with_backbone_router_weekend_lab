@@ -13,12 +13,28 @@ var writePostSource;
 var writePostTemplate;
 
 
+
+
 //Preview Blog posts
 Handlebars.registerHelper('trimString', function(passedString) {
     var theString = passedString.substring(0,300);
     return new Handlebars.SafeString(theString)
 });
 
+Handlebars.registerHelper('eachReverse', function(context){
+    var options = arguments[arguments.length - 1];
+    var ret = '';
+
+    if (context && context.length > 0) {
+        for (var i = context.length - 1; i >= 0; i--) {
+            ret += options.fn(context[i]);
+        }
+    } else {
+        ret = options.inverse(this);
+    }
+
+    return ret;
+});
 
 
 //Get templates to use in SPA
@@ -84,6 +100,7 @@ router.on("route:login", function(){
 });
 
 router.on("route:newpost", function(){
+
 	$("#content").html(writePostTemplate);
 });
 
@@ -111,6 +128,9 @@ Backbone.history.start();
 
 //Create new user
 $(document).on("click", "#send_user", function(){
+	for (var i = 0; i < sessionStorage.length; i++ ){
+		sessionStorage.removeItem(sessionStorage.key(0))
+	};
 	$.ajax({
 		url: "http://lg-publish.herokuapp.com/users",
 		type: "POST",
@@ -185,6 +205,39 @@ $(document).on("click", "#savelater", function(){
 		}
 	});
 });
+
+$(document).on("click", "#login-in", function(){
+	for (var i = 0; i < sessionStorage.length; i++ ){
+		sessionStorage.removeItem(sessionStorage.key(0))
+	};
+	$.ajax({
+		url: "http://lg-publish.herokuapp.com/users",
+		type: "GET",
+		success: function(data){
+			var bloggers = [];
+			var e_mail = $("#loginemail").val();
+			data.forEach(function(users){
+				bloggers.push(users.email)
+			});
+			if (bloggers.indexOf(e_mail) < 0 ){
+				alert("You don't have an account, please create a new one");
+				window.location.href = "#signup";
+			} else {
+				var match = _.filter(data, function(x){ return x.email == e_mail});
+				sessionStorage.setItem(match[0].id, match[0].auth_token);
+				window.location.href = "#posts/new";
+			}
+		},
+		error: function(){
+			alert("something went wrong")
+		}
+	})
+});
+
+
+// var filter = _.filter(data, function(x){ return x.email == "lalogf@gmail.com" });
+
+
 
 
 

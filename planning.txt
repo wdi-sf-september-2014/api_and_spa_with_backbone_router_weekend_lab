@@ -21,8 +21,10 @@ Create User request
 
 curl -i -X GET -H "Accept: application/json" -H "Content-Type: application/json" http://lg-publish.herokuapp.com/posts
 
+curl -i -X GET -H "Accept: application/json" -H "Content-Type: application/json" http://0.0.0.0:3000/posts
+
 curl -X POST -H "Accept: application/json" -H "Content-Type: application/json" -d '{"user": {"firstname": "Lalo","lastname": "Gonzalez", "email": "lalo@ga.com","password":"password"}}' http://lg-publish.herokuapp.com/users
 
 
-curl -X POST -H "Accept: application/json" -H "Content-Type: application/json" -d'{"post":{"title":"super title", "user_id": '2',"is_public": 'true', "content": "Lorem ipsum dolor sit amet, consectetur sicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}}' -H 'Authorization: Token token="83ccafe78c0301452d1c5c50b5edd330"' http://lg-publish.herokuapp.com/posts
+curl -X POST -H "Accept: application/json" -H "Content-Type: application/json" -d'{"post":{"title":"super title", "user_id": '2',"is_public": 'false', "content": "Lorem ipsum dolor sit amet, consectetur sicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}}' -H 'Authorization: Token token="8e2b238ba4ccc412e0573df3a9596942"' http://lg-publish.herokuapp.com/posts
  
