@@ -1,12 +1,17 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :update]
   before_action :authenticate, only: [:create, :update]
-  before_action :set_user, only: [:post_index]
+  before_action :set_user, only: :post_index
 
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.where("public is NULL")
+    @user = User.find(params[:user_id])
+    if @user
+      @posts = Post.where("public is NULL").where(:user_id => @user.id, "public is NOT NULL")
+    else
+      @posts = Post.where("public is NULL")
+    end
   end
 
   def post_index

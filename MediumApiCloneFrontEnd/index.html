@@ -40,7 +40,7 @@
 				<div class="col-sm-6">
 					<h2>{{title}}</h2>
 				  <p>{{content}}</p>
-				  {{if (postData.user_id == sessionStorage.getItem("user_id")) && (postData.public == false)}}
+				  {{if (postData.user_id == parseInt(sessionStorage.getItem("user_id")) && postData.public == false)}}
 				  	<a class="btn btn-default publish">Publish</a>
 				  {{/if}}
 				</div>
