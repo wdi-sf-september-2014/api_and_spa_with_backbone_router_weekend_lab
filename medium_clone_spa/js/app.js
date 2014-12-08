@@ -81,7 +81,7 @@ $(function() {
     logout: function() {
       sessionStorage.removeItem("auth_token"); 
       sessionStorage.removeItem("user_id"); 
-      $('.signed-in').hide();
+      app.navigate('index', { trigger: true} );
     },
 
     new_post: function() {
