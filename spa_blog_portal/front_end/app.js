@@ -33,7 +33,7 @@ function getPosts () {
   //pull all posts from the api--was originally part of $(document).ready (see the old app_withoutbackbone.js file)
 
   $.ajax({
-    url: "http://spa_blog_portal.dev/posts",
+    url: "http://api.spa_blog_portal.dev/posts.json",
     type: "GET",
     success: function(data){
   
@@ -55,7 +55,7 @@ router.on("route:index", getPosts);
 router.on("route:edit_post", function(id){
   //pull all posts from the api--was originally part of $(document).on("click") (see the old app_withoutbackbone.js file
 $.ajax({
-    url: "http://spa_blog_portal.dev/posts" + id,
+    url: "http://api.spa_blog_portal.dev/posts.json" + id,
     type: "GET",
     success: function(data) {
      var html = editPostTemplate(data);
@@ -77,7 +77,7 @@ $(document).on("click", ".edit-button", function(){
 //when user clicks on submit button after they have edited. 
 $(document).on("click", "#submit-edits", function(){
   $.ajax({
-    url: "http://spa_blog_portal.dev/posts" + $(this).attr("edit_id"),
+    url: "http://api.spa_blog_portal.dev/posts.json" + $(this).attr("edit_id"),
     type: "PUT",
     data: {
       product: {
@@ -100,7 +100,7 @@ $(document).on("click", "#submit-edits", function(){
 
 $(document).on("click", "#add-post", function(){
   $.ajax({
-    url: "http://spa_blog_portal.dev/posts",
+    url: "http://api.spa_blog_portal.dev/posts.json",
     type: "POST",
     data: {
       product: {
@@ -129,7 +129,7 @@ $(document).on("click", "#add-post", function(){
 
 $(document).on("click", ".delete-button", function(){
   $.ajax({
-    url: "http://spa_blog_portal.dev/posts" + $(this).attr("id"),
+    url: "http://api.spa_blog_portal.dev/posts.json" + $(this).attr("id"),
     type: "DELETE", 
     success: function(){
       // this will send them back to index using backbone

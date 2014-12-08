@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
-  resources :comments
+  resources :comments, constraints: { subdomain: "api" }
 
-  resources :posts
+  resources :posts, constraints: { subdomain: "api" }
 
-  resources :users
+  resources :users, constraints: { subdomain: "api" }
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
