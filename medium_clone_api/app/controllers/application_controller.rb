@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session
 
+  respond_to :json
   before_filter :check_format
 
   def check_format
