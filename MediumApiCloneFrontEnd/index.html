@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Medium Clone Api</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+	<style>
+		.smaller {
+			width:600px;
+			margin-left:auto;
+			margin-right:auto;
+		}
+		.margin-top-40 {
+			margin-top:40px;
+		}
+		.bold {
+			font-weight:bold;
+		}
+		.margin-top-10 {
+			margin-top:10px;
+		}
+		.txt-center {
+			text-align:center;
+		}
+		.space {
+			margin-right: 10px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container margin-top-40" id="container"></div>
+	<script id="posts" type="text/x-handlebars-template">
+	<div><h1>All Posts</h1></div>
+	<div>
+	<a href="#login" data-toggle="modal" data-target="#login-modal" class="btn btn-success create">Login</a> 
+	<a href="#signup" data-toggle="modal" data-target="#create-account-modal" class="btn btn-success create">Signup</a> 
+	<a href="#posts/new" class="btn btn-default pull-right">Post</a> 
+	<a href="#users/posts" class="btn btn-default pull-right">My Posts</a> 
+		<div class="row">
+			{{#each postData}}
+				<div class="col-sm-6">
+					<h2>{{title}}</h2>
+				  <p>{{content}}</p>
+				  {{if (postData.user_id == parseInt(sessionStorage.getItem("user_id")) && postData.public == false)}}
+				  	<a class="btn btn-default publish">Publish</a>
+				  {{/if}}
+				</div>
+			{{/each}}
+		</div>
+	</script>
+
+	<script id="user_posts" type="text/x-handlebars-template">
+	<div><h1>All Posts</h1></div>
+	<a href="#posts/new" class="btn btn-default pull-right">Post</a> 
+	<a href="#posts" class="btn btn-success">Back to All Posts</a>
+		<div class="row">
+			{{#each userpostData}}
+				<div class="col-sm-6">
+					<h2>{{title}}</h2>
+				  <p>{{content}}</p>
+				</div>
+			{{/each}}
+		</div>
+	</script>
+
+		<div id="login-modal" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h4 class="modal-title">Login</h4>
+			</div>
+			<div class="modal-body">
+				<div class="bold margin-top-10">
+					Email
+				</div>
+				<div class="margin-top-10">
+					<input type="text" name="email" class="form-control" id="check-email" />
+				</div>
+				<div class="bold margin-top-10">
+					Password
+				</div>
+				<div class="margin-top-10">
+					<input type="password" name="password" class="form-control"  id="check-password"/>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary" id="login">Login</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div id="create-account-modal" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h4 class="modal-title">Signup</h4>
+			</div>
+			<div class="modal-body">
+				<div class="bold">
+					First Name
+				</div>
+				<div class="margin-top-10">
+					<input type="text" class="form-control" id="add-first"/>
+				</div>
+				<div class="bold margin-top-10">
+					Last Name
+				</div>
+				<div class="margin-top-10">
+					<input type="text" class="form-control" id="add-last" />
+				</div>
+				<div class="bold margin-top-10">
+					Email
+				</div>
+				<div class="margin-top-10">
+					<input type="text" class="form-control" id="add-email" />
+				</div>
+				<div class="bold margin-top-10">
+					Password
+				</div>
+				<div class="margin-top-10">
+					<input type="password" class="form-control"  id="add-password"/>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary" id="signup">Signup</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+	<script id="viewpost" type="text/x-handlebars-template">
+	<div><h1>View Post</h1></div>
+	<a class="btn btn-primary" href="#posts">Back</a>
+			<p>Post id: {{postData.id}}</p>
+			<p>Title: {{postData.title}}</p>
+			<p>Content: {{postData.content}}</p>
+	</div>
+	</script>
+
+
+	<script id="new_post" type="text/x-handlebars-template">
+	<div><h1>Create a Post</h1></div>
+		<div class="well smaller margin-top-40">
+		<div class="bold">
+			Title
+		</div>
+		<div class="margin-top-10">
+			<input type="text" class="form-control" id="title" />
+		</div>
+		<div class="bold margin-top-10">
+			Content
+		</div>
+		<div class="margin-top-10">
+			<input type="text" class="form-control" id="content" />
+		</div>
+		<div class="margin-top-10 txt-center">
+			<a type="a" class="btn btn-default submitnew">Publish</a>
+			<a type="a" class="btn btn-default draft">Save to drafts</a>
+		</div>
+	</div>
+</script>
+
+<script id="edit_post" type="text/x-handlebars-template">
+		<div><h1>Edit A Post</h1></div>
+		<div class="well smaller margin-top-40">
+		<div class="bold">
+			Title
+		</div>
+		<div class="margin-top-10">
+			<input type="text" class="form-control" id="title" placeholder="Title" value="{{postData.title}}"/>
+		</div>
+		<div class="bold margin-top-10">
+			Content
+		</div>
+		<div class="margin-top-10">
+			<input type="text" class="form-control" id="content" placeholder="Content" value="{{postData.content}}"/>
+		</div>
+		<div class="margin-top-10 txt-center">
+		<a type="a" id="{{postData.id}}" class="btn btn-default submitedit">Submit</a>
+		</div>
+	</div>
+</script>
+
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="http://underscorejs.org/underscore-min.js"></script>
+<script src="http://backbonejs.org/backbone-min.js"></script>
+<script src="handlebars-v2.0.0.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
