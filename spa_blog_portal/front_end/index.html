@@ -1,0 +1,145 @@
+<!Doctype HTML>
+<html>
+<head>
+  <title> Sandi's Blog Post Portal API App </title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
+
+    <style>
+    .smaller {
+        width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+
+    }
+
+    .margin-top-40{
+        margin-top: 40px;
+    }
+
+     .margin-top-10{
+        margin-top: 10px;
+    }
+
+     .margin-bottom-10{
+        margin-bottom: 10px;
+    }
+     .txt-center {
+        text-align: center;
+    }
+    </style>
+  
+</head>
+
+<body>
+
+<div id="content"> </div>
+
+<script type="x-handlebars-template" id="show-posts-template">
+
+<div class="container margin-top-40 margin-bottom-10">
+  <div>
+  <a data-toggle="modal" data-target="#add-post-modal" class="btn btn-primary"> Add New Post </a>
+  </div>
+
+  <table class="table striped">
+    <thead>
+      <th> Title of Post </th>
+      <th> Content of Post </th>
+     
+    </thead>
+
+    <tbody>
+    {{#each postData}}
+      <tr>
+        <td> {{title}} </td>
+        <td> {{body}} </td>
+        
+        <td> 
+          <a href="#edit/{{id}}" class="btn btn-primary edit-button">Edit</a>
+          <a href="#" class="btn btn-danger delete-button" id="{{id}}">Delete</a>
+        </td>
+      </tr>
+     {{/each}}
+    </tbody>
+  </table>
+</div>
+
+</script>
+
+<script type="x-handlebars-template" id="edit-post-template">
+  <div class ="well smaller margin-top-40">
+    <div class ="bold">
+      Name
+    </div>
+    <div class = "margin-top-10">
+      <input type ="text" class="form-control" name="title" value={{title}}>
+    </div>
+
+    <div class ="bold margin-top-10">
+      Body
+    </div>
+
+    <div class = "margin-top-10">
+      <input type ="text" class="form-control" name="body" value={{body}}>
+    </div>
+
+   <div class = "margin-top-10 txt-center">
+   <!--notice the custom attribute that app.js will grap on the POST-->
+    <a href="#" class="btn btn-success" id="submit-edits" edit_id="{{id}}"> Submit Edits </a>
+      </div>
+    </div>
+    
+    </script>
+
+<!--modal for adding a new post-->
+
+<div id="add-post-modal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title">Add a New Post</h4>
+      </div>
+      <div class="modal-body">
+        
+        <div class="bold">
+          Title of Post
+        </div>
+
+        <div class="margin-top-10">
+          <input type ="text" class="form-control" id="add-title"/>
+        </div>
+
+        <div class="bold margin-top-10">
+          Content
+        </div>
+
+        <div class="margin-top-10">
+          <input type ="textarea" class="form-control" id="add-body"/>
+        </div>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="add-post">Add a New Post</button>
+      </div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+  </body>
+
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="handlebars-v2.0.0.js"></script>
+<script src="underscore.min.js"></script>
+<script src="backbone.min.js"></script>
+<script src="app.js"></script>
+
+
+</html>
