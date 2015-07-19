@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Medium Clone Weekend Project</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css" />
+		<link rel="stylesheet" href="style.css" />
+	</head>
+
+	<body>
+		<div class="container">
+			<!-- Navbar -->
+			<nav class="navbar navbar-default" role="navigation">
+				<div class="container-fluid">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href="#">Medium Clone</a>
+					</div>
+
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						<ul class="nav navbar-nav">
+							<li><a data-toggle="modal" data-target="#add-post-modal">Write a New Post</a></li>
+						</ul>
+						<ul class="nav navbar-nav navbar-right">
+	        		<li><a href="#">Log In</a></li>
+	        		<li><a href="#">Register</a></li>
+	      		</ul>
+
+					</div><!-- /.navbar-collapse -->
+				</div><!-- /.container-fluid -->
+			</nav>
+			<!-- Navbar -->
+		
+			<!-- Needed for Handlebars -->
+			<div id="content"></div>
+			<!-- Needed for Handlebars -->
+		
+			<!-- This section diplays all the post -->
+			<script type="x-handlebars-template" id="show-posts-template">
+				<div class="container margin-top-40">
+						{{#each postData}}
+						<h1>{{headline}}</h1>
+						<h4>By {{first}} {{last}}</h4>
+						<p>{{body}}</p>
+						{{/each}}
+				</div>
+			</script>
+			<!-- End of section to display all posts -->
+
+			<!-- This section creates a modal for adding posts -->
+			<div id="add-post-modal" class="modal fade">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+							<h4 class="modal-title">Add a new post</h4>
+						</div>
+						<div class="modal-body">
+							<div class="bold">
+								Headline
+							</div>
+							<div class="margin-top-10">
+								<input type="text" class="form-control" id="add-headline" />
+							</div>
+							<div class="bold">
+								Body
+							</div>
+							<div class="margin-top-10">
+								<textarea class="form-control" rows="10" id="add-body"></textarea>
+							</div>
+							<div class="margin-top-10">
+								<div class="radio">
+									<label>
+										<input type="radio" id="draft-status" value="false">
+										Set status to "draft"
+									</label>
+								</div>
+								<div class="radio">
+									<label>
+										<input type="radio" class="draft-status" value="true">
+										Set status to "publish"
+									</label>
+								</div>								
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-primary" id="add-post">Add New Post</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- End of section to add a post -->
+		
+		</div> <!-- end 'Container' -->
+			
+		<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+		<script src="assets/javascript/handlebars.js"></script>
+		<script src="assets/javascript/underscore.js"></script>
+		<script src="assets/javascript/backbone.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+		<script src="assets/javascript/app.js"></script>
+	</body>
+</html>
